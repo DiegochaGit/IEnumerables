@@ -1,7 +1,11 @@
-﻿namespace IEnumerables;
+﻿using System.Text.RegularExpressions;
+
+namespace IEnumerables;
 
 public class HorseConflictSolver
 {
+    // Methods for Exercise 37
+
     private LinkedList<string> horseLocations;
     private Dictionary<string, List<string>> conflicts;
 
@@ -9,6 +13,18 @@ public class HorseConflictSolver
     {
         horseLocations = new LinkedList<string>();
         conflicts = new Dictionary<string, List<string>>();
+    }
+
+    public static void ValidateLocations(string locations)
+    {
+        string[] separatedLocations = locations.Split(',');
+        foreach (string separatedLocation in separatedLocations)
+        {
+            if (!Regex.IsMatch(separatedLocation.Trim(), "^[A-H][1-8]$"))
+            {
+                throw new ArgumentException("Invalid Location of a horse!");
+            }
+        }
     }
 
     public void ProcessInput(string input)
@@ -60,7 +76,7 @@ public class HorseConflictSolver
 
     public string GetResults()
     {
-        string results = string.Empty;
+        var results = string.Empty;
         foreach (string location in horseLocations)
         {
             results += $"Analyzing Horse in {location} => ";
@@ -70,13 +86,14 @@ public class HorseConflictSolver
             }
             else
             {
-                for (int i = conflicts[location].Count - 1; i>=0; i--)
-                { 
+                for (int i = conflicts[location].Count - 1; i >= 0; i--)
+                {
                     results += $"Conflict with {conflicts[location][i]}   ";
                 }
             }
             results += "\n";
         }
         return results;
-        }
+    }
 }
+

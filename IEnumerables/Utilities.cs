@@ -1,4 +1,6 @@
-﻿namespace IEnumerables;
+﻿using System.Text.RegularExpressions;
+
+namespace IEnumerables;
 
 public class Utilities
 {
@@ -48,10 +50,10 @@ public class Utilities
         int cols1 = matrix1[0].Count;
         int rows2 = matrix2.Count;
         int cols2 = matrix2[0].Count;
-        if (cols1 != rows2)
-        {
-            throw new ArgumentException("Matrices are not compatible for multiplication.");
-        }
+        //if (cols1 != rows2)
+        //{
+        //    throw new ArgumentException("Matrices are not compatible for multiplication.");
+        //}
         List<List<int>> product = new List<List<int>>();
         for (int i = 0; i < rows1; i++)
         {
@@ -70,6 +72,14 @@ public class Utilities
 
 
     // Methods for Exercise 34
+
+    public static void ValidateSize(int size)
+    {
+        if ((size + 1) % 2 != 0)
+        {
+            throw new ArgumentException("Wrong entry! The order must be an odd integer");
+        }
+    }
 
     public static void GenerateFullMatrix(List<List<int>> matrixOriginal, int n)
     {
@@ -140,10 +150,19 @@ public class Utilities
 
 
     // Methods for Exercise 35
+
+    public static void ValidateNumber(int number)
+    {
+        if (number <=1)
+        {
+            throw new ArgumentException("Wrong entry! The input must be a positive integer greater than or equal to 2");
+        }
+    }
+
     public static LinkedList<int> GetPrimeFactors(int number)
     {
         LinkedList<int> factors = new LinkedList<int>();
-        int divisor = 2;
+        var divisor = 2;
         while (number > 1)
         {
             if (number % divisor == 0)
@@ -162,18 +181,9 @@ public class Utilities
     public static string ShowPrimeFactors(LinkedList<int> factors, int number)
     {
         var output = number + " = ";
-        foreach (int factor in factors)
-        {
-            if (factor.Equals(factors.Last.Value))
-            {
-                output += factor;
-            }
-            else
-            {
-                output += factor + " x ";
-            }
-        }
+        output += string.Join(" x ", factors);
         return output;
     }
 
 }
+
